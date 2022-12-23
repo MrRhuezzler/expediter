@@ -14,6 +14,12 @@ public class SetNavigationTarget : MonoBehaviour {
     [SerializeField]
     private TMP_Text errorText;
 
+    [SerializeField]
+    private GameObject pathParent;
+
+    [SerializeField]
+    private GameObject arrowPrefab;
+
     private readonly List<NavigationTarget> navigationTargets = new List<NavigationTarget>();
 
     private NavMeshPath path;
@@ -35,7 +41,8 @@ public class SetNavigationTarget : MonoBehaviour {
             navigationTargetsDropdown.options.Add(new TMP_Dropdown.OptionData(child.Name));
         }
 
-        errorText.text = "No target selected";
+        //errorText.text = "No target selected";
+        //GameObject ar = Instantiate(arrowPrefab, pathParent.transform.position, pathParent.transform.rotation) as GameObject;
 
     }
 
@@ -44,6 +51,11 @@ public class SetNavigationTarget : MonoBehaviour {
         if (lineVisibility && targetPosition != Vector3.zero)
         {
             NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, path);
+            for(int i = 0; i < path.corners.Length; i++)
+            {
+                //GameObject ar = Instantiate(arrowPrefab, new Vector3(path.corners[i].x, path.corners[i].y, path.corners[i].z), Quaternion.identity);
+                //ar.transform.parent = pathParent.transform;
+            }
             line.positionCount = path.corners.Length;
             line.SetPositions(path.corners);
         }
