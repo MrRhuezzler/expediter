@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Manager : MonoBehaviour
+public class LocationService : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text errorText;
