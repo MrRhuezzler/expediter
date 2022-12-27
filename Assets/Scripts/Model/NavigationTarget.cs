@@ -7,9 +7,4 @@ public class NavigationTarget : MonoBehaviour
 {
     [SerializeField]
     public string Name;
-
-    public NavigationTarget(string name)
-    {
-        Name = name;
-    }
 }
