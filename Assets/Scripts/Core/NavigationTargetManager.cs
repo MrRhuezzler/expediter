@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -36,12 +34,7 @@ public class NavigationTargetManager : MonoBehaviour
         NavigationTarget selectedTarget = NavigationTargets.Find(x => x.Name.Equals(selectedText));
         if (selectedTarget != null)
         {
-            //errorText.text = "";
             currentTarget = selectedTarget.gameObject;
-        }
-        else
-        {
-            //errorText.text = "No target selected";
         }
     }
 

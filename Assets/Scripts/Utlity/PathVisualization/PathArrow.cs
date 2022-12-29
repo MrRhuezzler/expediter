@@ -21,7 +21,9 @@ public class PathArrow : MonoBehaviour
     private readonly List<GameObject> arrows = new List<GameObject>();
 
     private float timer;
-    public float waitTimer = 1.0f;
+
+    [SerializeField]
+    private float waitTimer = 1.0f;
     
 
     // Start is called before the first frame update

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
+using UnityEngine.XR.ARFoundation;
 
 public class LocationServiceManager : MonoBehaviour
 {
@@ -16,22 +17,31 @@ public class LocationServiceManager : MonoBehaviour
     [SerializeField]
     private GameObject possibleLocationPrefab;
 
+    [SerializeField]
+    private ARSessionOrigin sessionOrigin;
+
+    [SerializeField]
+    private ARSession session;
+
+    [SerializeField]
+    private float waitTimer = 10.0f;
+
     private List<AnchorRect> anchorsRects = new List<AnchorRect>();
+    private float timer;
 
     private void Start()
     {
-        //StartCoroutine(StartLocationService());
+        StartCoroutine(StartLocationService());
+        GetAllAnchorRects();
+    }
+
+    private void GetAllAnchorRects()
+    {
         anchorsRects.Clear();
-        foreach(AnchorRect ar in anchorsParent.GetComponentsInChildren<AnchorRect>())
+        foreach (AnchorRect ar in anchorsParent.GetComponentsInChildren<AnchorRect>())
         {
             anchorsRects.Add(ar);
             ar.Start();
-        }
-
-        foreach(AnchorRect ar in anchorsRects)
-        {
-            Vector3 possibleLocation = ar.TrileratePoint(new GeoCordinates(11.024633, 77.004824));
-            Instantiate(possibleLocationPrefab, possibleLocation, Quaternion.identity);
         }
     }
 
@@ -39,7 +49,10 @@ public class LocationServiceManager : MonoBehaviour
     {
         // Check if the user has location service enabled.
         if (!Input.location.isEnabledByUser)
+        {
+            print("Enable Location Services !");
             Permission.RequestUserPermission(Permission.FineLocation);
+        }
 
         // Starts the location service.
         Input.location.Start(1, 1);
@@ -65,18 +78,39 @@ public class LocationServiceManager : MonoBehaviour
             print("Unable to determine device location");
             yield break;
         }
-        else
-        {
-            // If the connection succeeded, this retrieves the device's current location and displays it in the Console window.
-            print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
-        }
 
         // Stops the location service if there is no need to query location updates continuously.
         // Input.location.Stop();
     }
 
+    private void ReCenterArSessionOrigin(Vector3 position, Quaternion rotation)
+    {
+        session.Reset();
+        sessionOrigin.transform.SetPositionAndRotation(position, rotation);
+    }
+
+    private void ChangeCurrentLocation()
+    {
+        foreach (AnchorRect ar in anchorsRects)
+        {
+            GeoCordinates pos = new GeoCordinates(Input.location.lastData.latitude, Input.location.lastData.longitude);
+            if (ar.IsInsideRect(pos))
+            {
+                print("Changing up your location");
+                Vector3 possibleLocation = ar.TrileratePoint(pos);
+                ReCenterArSessionOrigin(possibleLocation, sessionOrigin.transform.rotation);
+            }
+        }
+    }
+
     void Update()
     {
-
+        timer += Time.deltaTime;
+        if (timer > waitTimer)
+        {
+            ChangeCurrentLocation();
+            Time.timeScale = 1.0f;
+            timer -= waitTimer;
+        }
     }
 }

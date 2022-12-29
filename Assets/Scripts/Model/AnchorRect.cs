@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AnchorRect : MonoBehaviour
@@ -11,12 +9,27 @@ public class AnchorRect : MonoBehaviour
 
     private List<AnchorPoint> points = new List<AnchorPoint>();
 
+    private AnchorPoint bottomLeft = null;
+    private AnchorPoint topRight = null;
+
     // Start is called before the first frame update
     public void Start()
     {
+        double blMin = double.MaxValue, trMax = double.MinValue;
         points.Clear();
         foreach(AnchorPoint child in GetComponentsInChildren<AnchorPoint>())
         {
+            double sum = child.worldCoordinates.latitude + child.worldCoordinates.longitude;
+            if(sum < blMin)
+            {
+                blMin = sum;
+                bottomLeft = child;
+            }
+            if(sum > trMax)
+            {
+                trMax = sum;
+                topRight = child;
+            }
             points.Add(child);
         }
         points.Sort();
@@ -24,9 +37,7 @@ public class AnchorRect : MonoBehaviour
 
     public bool IsInsideRect(GeoCordinates point)
     {
-        GeoCordinates bl = points[3].worldCoordinates;
-        GeoCordinates tr = points[1].worldCoordinates;
-        return GeoCordinates.IsInsideRect(bl, tr, point);
+        return GeoCordinates.IsInsideRect(bottomLeft.worldCoordinates, topRight.worldCoordinates, point);
     }
 
     private Vector3 Trilerate(Vector3 p1, Vector3 p2, Vector3 p3, float d1, float d2, float d3)
@@ -36,7 +47,7 @@ public class AnchorRect : MonoBehaviour
 
         Vector3 a = p3 - p1 - (ex * i);
         Vector3 ey = a.normalized;
-        Vector3 ez = Vector3.Cross(ex, ey);
+        //Vector3 ez = Vector3.Cross(ex, ey);
         float d = (p2-p1).magnitude;
         float j = Vector3.Dot(ey, p3 - p1);
 
@@ -53,7 +64,6 @@ public class AnchorRect : MonoBehaviour
 
         if (float.IsNaN(z))
         {
-            //print(Vector3.zero);
             return Vector3.zero;
         }
 
@@ -68,7 +78,7 @@ public class AnchorRect : MonoBehaviour
     public Vector3 TrileratePoint(GeoCordinates point)
     {
         List<Vector3> locations = new(); 
-        int MAX_ITERATIONS = 2;
+        int MAX_ITERATIONS = 3;
         for(int i = 0; i < MAX_ITERATIONS; i++)
         {
             int a = (i + 0) % 4;
