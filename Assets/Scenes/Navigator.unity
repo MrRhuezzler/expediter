@@ -260,6 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationText: {fileID: 956198969}
   anchorsParent: {fileID: 1445956529}
+  possibleLocationPrefab: {fileID: 30043557448973352, guid: c338faa1346623d4aab5006085d3061b, type: 3}
 --- !u!1 &225157723
 GameObject:
   m_ObjectHideFlags: 0

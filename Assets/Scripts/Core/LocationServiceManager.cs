@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
-using static System.Math;
-using static UnityEngine.UI.Image;
 
 public class LocationServiceManager : MonoBehaviour
 {
@@ -15,6 +13,9 @@ public class LocationServiceManager : MonoBehaviour
     [SerializeField]
     private GameObject anchorsParent;
 
+    [SerializeField]
+    private GameObject possibleLocationPrefab;
+
     private List<AnchorRect> anchorsRects = new List<AnchorRect>();
 
     private void Start()
@@ -24,17 +25,13 @@ public class LocationServiceManager : MonoBehaviour
         foreach(AnchorRect ar in anchorsParent.GetComponentsInChildren<AnchorRect>())
         {
             anchorsRects.Add(ar);
+            ar.Start();
         }
 
         foreach(AnchorRect ar in anchorsRects)
         {
-            if(ar.IsInsideRect(new GeoCordinates(11.024452, 77.004741)))
-            {
-                print("You are inside: " + ar.name);
-            } else
-            {
-                print(ar.name + " Sorry!");
-            }
+            Vector3 possibleLocation = ar.TrileratePoint(new GeoCordinates(11.024633, 77.004824));
+            Instantiate(possibleLocationPrefab, possibleLocation, Quaternion.identity);
         }
     }
 
