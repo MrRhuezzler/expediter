@@ -40,6 +40,11 @@ public class AnchorRect : MonoBehaviour
         return GeoCordinates.IsInsideRect(bottomLeft.worldCoordinates, topRight.worldCoordinates, point);
     }
 
+    private Vector3 adjustVector(Vector3 position)
+    {
+        return new Vector3(position.x, position.z, position.y);
+    }
+
     private Vector3 Trilerate(Vector3 p1, Vector3 p2, Vector3 p3, float d1, float d2, float d3)
     {
         Vector3 ex = (p2 - p1).normalized;
@@ -77,8 +82,8 @@ public class AnchorRect : MonoBehaviour
 
     public Vector3 TrileratePoint(GeoCordinates point)
     {
-        List<Vector3> locations = new(); 
-        int MAX_ITERATIONS = 3;
+        List<Vector3> locations = new();
+        int MAX_ITERATIONS = 4;
         for(int i = 0; i < MAX_ITERATIONS; i++)
         {
             int a = (i + 0) % 4;
@@ -93,7 +98,7 @@ public class AnchorRect : MonoBehaviour
             Vector3 p2 = points[b].gameObject.transform.position;
             Vector3 p3 = points[c].gameObject.transform.position;
 
-            locations.Add(Trilerate(p1, p2, p3, d1, d2, d3));
+            locations.Add(adjustVector(Trilerate(adjustVector(p1), adjustVector(p2), adjustVector(p3), d1, d2, d3)));
         }
 
         Vector3 averageLocation = Vector3.zero;
@@ -103,6 +108,8 @@ public class AnchorRect : MonoBehaviour
         }
 
         return averageLocation / MAX_ITERATIONS;
+        //locations.Add(averageLocation / MAX_ITERATIONS);
+        //return locations;
     }
 
     // Update is called once per frame

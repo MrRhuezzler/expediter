@@ -24,15 +24,16 @@ public class LocationServiceManager : MonoBehaviour
     private ARSession session;
 
     [SerializeField]
-    private float waitTimer = 10.0f;
+    private float waitTimer;
 
     private List<AnchorRect> anchorsRects = new List<AnchorRect>();
     private float timer;
 
     private void Start()
     {
-        StartCoroutine(StartLocationService());
         GetAllAnchorRects();
+        StartCoroutine(UpdateLocation());
+        //TestLocation();
     }
 
     private void GetAllAnchorRects()
@@ -45,7 +46,7 @@ public class LocationServiceManager : MonoBehaviour
         }
     }
 
-    IEnumerator StartLocationService()
+    IEnumerator UpdateLocation()
     {
         // Check if the user has location service enabled.
         if (!Input.location.isEnabledByUser)
@@ -55,7 +56,8 @@ public class LocationServiceManager : MonoBehaviour
         }
 
         // Starts the location service.
-        Input.location.Start(1, 1);
+        Input.location.Start(0.01f,0.01f);
+        Input.compass.enabled = true;
 
         // Waits until the location service initializes
         int maxWait = 20;
@@ -80,7 +82,8 @@ public class LocationServiceManager : MonoBehaviour
         }
 
         // Stops the location service if there is no need to query location updates continuously.
-        // Input.location.Stop();
+        ChangeCurrentLocation();
+        //Input.location.Stop();
     }
 
     private void ReCenterArSessionOrigin(Vector3 position, Quaternion rotation)
@@ -97,20 +100,40 @@ public class LocationServiceManager : MonoBehaviour
             if (ar.IsInsideRect(pos))
             {
                 print("Changing up your location");
+                //List<Vector3> possibleLocations = ar.TrileratePoint(pos);
                 Vector3 possibleLocation = ar.TrileratePoint(pos);
-                ReCenterArSessionOrigin(possibleLocation, sessionOrigin.transform.rotation);
+                //ReCenterArSessionOrigin(possibleLocations[4], Quaternion.Euler(0, Input.compass.trueHeading - 80, 0));
+                ReCenterArSessionOrigin(possibleLocation, Quaternion.Euler(0, Input.compass.trueHeading - 80, 0));
+            }
+        }
+    }
+
+    public void ResetLocation()
+    {
+        StartCoroutine(UpdateLocation());
+    }
+
+    private void TestLocation()
+    {
+        foreach (AnchorRect ar in anchorsRects)
+        {
+            GeoCordinates pos = new GeoCordinates(11.024414381312605, 77.00476120474491);
+            if (ar.IsInsideRect(pos))
+            {
+                print("Changing up your location");
+                /*
+                List<Vector3> possibleLocations = ar.TrileratePoint(pos);
+                foreach (Vector3 possibleLocation in possibleLocations)
+                {
+                    print(possibleLocation);
+                    Instantiate(possibleLocationPrefab, possibleLocation, Quaternion.identity);
+                }*/
             }
         }
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > waitTimer)
-        {
-            ChangeCurrentLocation();
-            Time.timeScale = 1.0f;
-            timer -= waitTimer;
-        }
+        locationText.text = Input.location.lastData.latitude + "\n" + Input.location.lastData.longitude + "\n" + Input.location.lastData.altitude + "\n" + Input.location.lastData.horizontalAccuracy + "\n" + Input.location.lastData.timestamp + "\n" + Input.compass.trueHeading;
     }
 }

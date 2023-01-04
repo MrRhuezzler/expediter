@@ -261,6 +261,9 @@ MonoBehaviour:
   locationText: {fileID: 956198969}
   anchorsParent: {fileID: 1445956529}
   possibleLocationPrefab: {fileID: 30043557448973352, guid: c338faa1346623d4aab5006085d3061b, type: 3}
+  sessionOrigin: {fileID: 1413736608}
+  session: {fileID: 518504565}
+  waitTimer: 10
 --- !u!1 &225157723
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,7 +676,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423776411}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.99, y: 0, z: -19.85}
+  m_LocalPosition: {x: 16.49, y: 0, z: -20.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -694,8 +697,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: M_BLOCK_SW
   worldCoordinates:
-    latitude: 11.024291
-    longitude: 77.004702
+    latitude: 11.02427
+    longitude: 77.0047
   index: 3
 --- !u!1 &518504563
 GameObject:
@@ -1043,7 +1046,7 @@ GameObject:
   - component: {fileID: 894593630}
   - component: {fileID: 894593629}
   m_Layer: 5
-  m_Name: LineVisibilityToggleButton
+  m_Name: Reset Location
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1114,9 +1117,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SetNavigationTarget, Assembly-CSharp
-        m_MethodName: NavigationLineVisibilityToggle
+      - m_Target: {fileID: 73653098}
+        m_TargetAssemblyTypeName: LocationServiceManager, Assembly-CSharp
+        m_MethodName: ResetLocation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1189,7 +1192,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895017852}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.99, y: 0, z: 4.882}
+  m_LocalPosition: {x: 16.49, y: 0, z: 5.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1210,8 +1213,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: M_BLOCK_SE
   worldCoordinates:
-    latitude: 11.024321
-    longitude: 77.004937
+    latitude: 11.02423064118631
+    longitude: 77.00500029132476
   index: 2
 --- !u!1 &902688784
 GameObject:
@@ -1371,7 +1374,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16, y: -19}
+  m_AnchoredPosition: {x: -344, y: 569}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &956198969
@@ -1653,7 +1656,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088489754}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2445,6 +2448,89 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Applied Science Lab (M)
+--- !u!1 &1233937395
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1233937396}
+  - component: {fileID: 1233937398}
+  - component: {fileID: 1233937397}
+  m_Layer: 7
+  m_Name: Ground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1233937396
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233937395}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 31.253, y: -0.1, z: 22.098}
+  m_LocalScale: {x: 193.1656, y: 136.58545, z: 136.58536}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5375858596479944265}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1233937397
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233937395}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 066b717ca48f63843a75a532059b022c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1233937398
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233937395}
+  m_Mesh: {fileID: -462981019419857548, guid: 70b2ab197b773774b922b92bf502a01b, type: 3}
 --- !u!1 &1235826114
 GameObject:
   m_ObjectHideFlags: 0
@@ -3230,7 +3316,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1721209693}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.83, y: 0, z: 4.882}
+  m_LocalPosition: {x: -30.03, y: 0, z: 5.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3251,8 +3337,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: M_BLOCK_NW
   worldCoordinates:
-    latitude: 11.02475
-    longitude: 77.004883
+    latitude: 11.024678968645295
+    longitude: 77.0049134201065
   index: 1
 --- !u!1 &1792048959
 GameObject:
@@ -3390,7 +3476,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797979519}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.83, y: 0, z: -19.8}
+  m_LocalPosition: {x: -30.03, y: 0, z: -20.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3411,8 +3497,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: M_BLOCK_NW
   worldCoordinates:
-    latitude: 11.024711
-    longitude: 77.004634
+    latitude: 11.02465
+    longitude: 77.00461
   index: 4
 --- !u!1 &1808450171
 GameObject:
@@ -3439,14 +3525,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808450171}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1088489755}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
 --- !u!81 &1808450173
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3482,7 +3568,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: -8.6
+  orthographic size: 12
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -4334,7 +4420,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Toggle Navigation Line
+  m_text: Reset Location
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4601,6 +4687,7 @@ Transform:
   m_Children:
   - {fileID: 9145478764352232748}
   - {fileID: 684387985939711382}
+  - {fileID: 1233937396}
   m_Father: {fileID: 1904901535}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
